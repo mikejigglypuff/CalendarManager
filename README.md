@@ -42,39 +42,43 @@
 #### 등록 요청
 ```json 
 {
-   "work":      할일(TEXT),
-   "name":      작성자명(VARCHAR(10)),
-   "password":  비밀번호(VARCHAR(20),
+   "works":        할일(TEXT),
+   "writer":      작성자명(VARCHAR(10)),
+   "password":    비밀번호(VARCHAR(20),
 }
 ```
 
 
 #### 조회 요청
 ```http request
-// updatedAt(optional):  DATE(YYYY-MM-DD)
-// name(optional):       VARCHAR(10)
-?updatedAt=[YYYY-MM-DD]&name=[작성자명]
+// writer(optional):       VARCHAR(10)
+// updatedAt(optional):    DATE(YYYY-MM-DD)
+?writer=[작성자명]&updatedAt=[YYYY-MM-DD]
 ```
 
 
 #### 조회 정보
 ```json
-{ 
-   scheduleID:  식별번호(LONG), 
-   work:        할일(TEXT), 
-   name:        작성자명(VARCHAR(10)), 
-   createdAt:   등록일(DATETIME), 
-   updatedAt:   수정일(DATETIME)
-}
+[
+   { 
+      "scheduleID":  식별번호(LONG), 
+      "works":        할일(TEXT), 
+      "writer":      작성자명(VARCHAR(10)), 
+      "createdAt":   등록일(DATETIME), 
+      "updatedAt":   수정일(DATETIME)
+   },
+   ...,
+   {...}
+]
 ```
 
 
 #### 수정 요청
 ```json
 { 
-   "password":        비밀번호(VARCHAR(20)), 
-   "work(optional)":  할일(TEXT), 
-   "name(optional)":  작성자명(VARCHAR(10))
+   "password":          비밀번호(VARCHAR(20)), 
+   "works(optional)":    할일(TEXT), 
+   "writer(optional)":  작성자명(VARCHAR(10))
 }
 ```
 
