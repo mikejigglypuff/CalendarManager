@@ -24,6 +24,10 @@ public class ScheduleService {
         return repository.save(schedule);
     }
 
+    public ScheduleGetResponseDTO getSchedule(Long scheduleID) {
+        return repository.findOne(scheduleID);
+    }
+
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetRequestDTO dto) {
         boolean hasWriter = dto.hasWriter(), isUpdatedAt = dto.isUpdatedAt();
 

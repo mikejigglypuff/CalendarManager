@@ -39,12 +39,13 @@
 추가 예정
 
 ### API 명세서
-| 기능     | Method | URL       | Request             | Response | Status code |
-|--------|--------|-----------|---------------------|-------|-------------|
-| 일정 생성  | POST   | /schedule | [등록 요청](#등록 요청)     |       | 200: 정상등록   |
-| 일정 조회  | GET    | /schedule | [조회 요청](#조회 요청)     | [조회 정보](#조회 정보) | 200: 정상조회   |
-| 일정 수정  | PATCH  | /schedule | [수정 요청](#수정 요청)     |       | 200: 정상수정|
-| 일정 삭제 | PUT    | /schedule | [삭제 요청](#삭제 요청)     |       | 200: 정상삭제 |                                                    
+| 기능     | Method | URL                    | Request             | Response              | Status code |
+|--------|--------|------------------------|---------------------|-----------------------|-------------|
+| 일정 생성  | POST   | /schedule              | [등록 요청](#등록 요청)     |                       | 200: 정상등록   |
+| 일정 조회  | GET    | /schedule              | [조회 요청](#조회 요청)     | [조회 정보](#조회 정보)       | 200: 정상조회   |
+| 단일 일정 조회 | GET | /schedule/{scheduleID} | [단일 조회 요청](#단일 조회 요청) | [단일 조회 정보](#단일 조회 정보) | 200: 정상조회 |
+| 일정 수정  | PATCH  | /schedule              | [수정 요청](#수정 요청)     |                       | 200: 정상수정|
+| 일정 삭제 | PUT    | /schedule              | [삭제 요청](#삭제 요청)     |                       | 200: 정상삭제 |                                                    
 
 #### 등록 요청
 ```json 
@@ -63,12 +64,11 @@
 ?writer=[작성자명]&updatedAt=[YYYY-MM-DD]
 ```
 
-
 #### 조회 정보
 ```json
 [
    { 
-      "scheduleID":  식별번호(LONG), 
+      "scheduleID":  식별번호(INT), 
       "works":        할일(TEXT), 
       "writer":      작성자명(VARCHAR(10)), 
       "createdAt":   등록일(DATETIME), 
@@ -79,6 +79,22 @@
 ]
 ```
 
+#### 단일 조회 요청
+```http request
+// scheduleID:  INT
+/schedule/{{scheduleID}}
+```
+
+#### 단일 조회 정보
+```json
+{
+   "scheduleID":  식별번호(INT),
+   "works":        할일(TEXT),
+   "writer":      작성자명(VARCHAR(10)),
+   "createdAt":   등록일(DATETIME),
+   "updatedAt":   수정일(DATETIME)
+}
+```
 
 #### 수정 요청
 ```json

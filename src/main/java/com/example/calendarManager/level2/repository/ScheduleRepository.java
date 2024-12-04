@@ -9,6 +9,7 @@ import java.util.List;
 public interface ScheduleRepository {
     public int save(Schedule schedule);
 
+    public ScheduleGetResponseDTO findOne(Long scheduleID);
     public List<ScheduleGetResponseDTO> findAll();
     public List<ScheduleGetResponseDTO> findByWriter(String writer);
     public List<ScheduleGetResponseDTO> findByUpdatedAt(LocalDate updatedAt);
