@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping(value = "/schedule", consumes = "application/json")
 public class ScheduleController {
     private final ScheduleService service;

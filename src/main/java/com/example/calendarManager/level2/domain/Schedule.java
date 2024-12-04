@@ -1,12 +1,12 @@
-package com.example.calendarManager.level1;
+package com.example.calendarManager.level2.domain;
 
-import com.example.calendarManager.level1.DTO.requestDTO.SchedulePostRequestDTO;
+import com.example.calendarManager.level2.DTO.requestDTO.SchedulePostRequestDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-//@Table("schedule")
+@Table("schedule")
 public class Schedule {
     @Id
     private Long scheduleID;
