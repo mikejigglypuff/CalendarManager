@@ -1,35 +1,35 @@
-package com.example.calendarManager.level2.domain;
+package com.example.calendarManager.level3.domain;
 
-import com.example.calendarManager.level2.DTO.requestDTO.SchedulePostRequestDTO;
+import com.example.calendarManager.level3.DTO.requestDTO.SchedulePostRequestDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-//@Table("schedule")
+@Table("schedule")
 public class Schedule {
     @Id
     private Long scheduleID;
     private String works;
-    private String writer;
     private LocalDateTime updatedAt;
 
+    private final Long writerID;
     private final String password;
     private final LocalDateTime createdAt;
 
     public Schedule(SchedulePostRequestDTO dto) {
         this.password = dto.getPassword();
-        this.writer = dto.getWriter();
+        this.writerID = dto.getWriterID();
         this.works = dto.getWorks();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     public Schedule(
-        String works, String writer, String password, LocalDateTime createdAt, LocalDateTime updatedAt
+        String works, Long writerID, String password, LocalDateTime createdAt, LocalDateTime updatedAt
     ) {
         this.password = password;
-        this.writer = writer;
+        this.writerID = writerID;
         this.works = works;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -39,8 +39,8 @@ public class Schedule {
         return scheduleID;
     }
 
-    public String getWriter() {
-        return writer;
+    public Long getWriterID() {
+        return writerID;
     }
 
     public String getWorks() {
@@ -57,11 +57,6 @@ public class Schedule {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setWriter(String writer) {
-        this.writer = writer;
-        this.updatedAt = LocalDateTime.now();
     }
 
     public void setWorks(String works) {

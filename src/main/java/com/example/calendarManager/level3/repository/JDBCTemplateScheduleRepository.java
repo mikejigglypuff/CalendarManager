@@ -1,8 +1,8 @@
-package com.example.calendarManager.level2.repository;
+package com.example.calendarManager.level3.repository;
 
-import com.example.calendarManager.level2.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level2.domain.Schedule;
-import com.example.calendarManager.level2.mapper.ScheduleGetResponseDTORowMapper;
+import com.example.calendarManager.level3.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level3.domain.Schedule;
+import com.example.calendarManager.level3.mapper.ScheduleGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@Repository
+@Repository
 public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     private final JdbcTemplate template;
     private final NamedParameterJdbcTemplate namedParameterTemplate;
@@ -32,8 +32,8 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public int save(Schedule schedule) {
-        String sql = "insert into schedule (works, writer, password, createdAt, updatedAt)"
-            + " values (:works, :writer, :password, :createdAt, :updatedAt)";
+        String sql = "insert into schedule (works, writerID, password, createdAt, updatedAt)"
+            + " values (:works, :writerID, :password, :createdAt, :updatedAt)";
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(schedule);
 
         return namedParameterTemplate.update(sql, paramSource);
@@ -55,10 +55,10 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findByWriter(String writer) {
-        String sql = "select * from schedule where writer = :writer";
+    public List<ScheduleGetResponseDTO> findByWriterID(Long writerID) {
+        String sql = "select * from schedule where writerID = :writerID";
         Map<String, Object> params = new HashMap<>();
-        params.put("writer", writer);
+        params.put("writerID", writerID);
 
         return namedParameterTemplate.query(sql, params, dtoRowMapper);
     }
@@ -73,10 +73,10 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findByWriterAndUpdatedAt(String writer, LocalDate updatedAt) {
-        String sql = "select * from schedule where writer = :writer and updatedAt > :updatedAt";
+    public List<ScheduleGetResponseDTO> findByWriterIDAndUpdatedAt(Long writerID, LocalDate updatedAt) {
+        String sql = "select * from schedule where writerID = :writerID and updatedAt > :updatedAt";
         Map<String, Object> params = new HashMap<>();
-        params.put("writer", writer);
+        params.put("writerID", writerID);
         params.put("updatedAt", updatedAt);
 
         return namedParameterTemplate.query(sql, params, dtoRowMapper);
@@ -95,11 +95,11 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public int updateWriter(String password, String writer) {
-        String sql = "update schedule set writer=:writer, updatedAt = :updatedAt" +
+    public int updateWriterID(String password, Long writerID) {
+        String sql = "update schedule set writerID=:writerID, updatedAt = :updatedAt" +
             " where password = :password";
         Map<String, Object> params = new HashMap<>();
-        params.put("writer", writer);
+        params.put("writerID", writerID);
         params.put("updatedAt", LocalDateTime.now());
         params.put("password", password);
 
@@ -107,12 +107,12 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public int updateWorksAndWriter(String password, String works, String writer) {
-        String sql = "update schedule set works=:works, writer=:writer, updatedAt = :updatedAt"
+    public int updateWorksAndWriterID(String password, String works, Long writerID) {
+        String sql = "update schedule set works=:works, writerID=:writerID, updatedAt = :updatedAt"
             + " where password = :password";
         Map<String, Object> params = new HashMap<>();
         params.put("works", works);
-        params.put("writer", writer);
+        params.put("writerID", writerID);
         params.put("updatedAt", LocalDateTime.now());
         params.put("password", password);
 

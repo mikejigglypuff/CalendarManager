@@ -29,6 +29,11 @@ public class ScheduleController {
         return new SchedulePostResponseDTO(affectedRowNumber);
     }
 
+    @GetMapping("/{scheduleID}")
+    public ScheduleGetResponseDTO getSchedule(@PathVariable Long scheduleID) {
+        return service.getSchedule(scheduleID);
+    }
+
     @GetMapping
     public List<ScheduleGetResponseDTO> getSchedule(
         @RequestParam(required = false, defaultValue = "") String writer,

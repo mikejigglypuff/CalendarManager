@@ -1,15 +1,15 @@
-package com.example.calendarManager.level2.controller;
+package com.example.calendarManager.level3.controller;
 
-import com.example.calendarManager.level2.DTO.requestDTO.ScheduleGetRequestDTO;
-import com.example.calendarManager.level2.DTO.requestDTO.SchedulePatchRequestDTO;
-import com.example.calendarManager.level2.DTO.requestDTO.SchedulePostRequestDTO;
-import com.example.calendarManager.level2.DTO.requestDTO.SchedulePutRequestDTO;
-import com.example.calendarManager.level2.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level2.DTO.responseDTO.SchedulePatchResponseDTO;
-import com.example.calendarManager.level2.DTO.responseDTO.SchedulePostResponseDTO;
-import com.example.calendarManager.level2.DTO.responseDTO.SchedulePutResponseDTO;
-import com.example.calendarManager.level2.domain.Schedule;
-import com.example.calendarManager.level2.service.ScheduleService;
+import com.example.calendarManager.level3.DTO.requestDTO.ScheduleGetRequestDTO;
+import com.example.calendarManager.level3.DTO.requestDTO.SchedulePatchRequestDTO;
+import com.example.calendarManager.level3.DTO.requestDTO.SchedulePostRequestDTO;
+import com.example.calendarManager.level3.DTO.requestDTO.SchedulePutRequestDTO;
+import com.example.calendarManager.level3.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level3.DTO.responseDTO.SchedulePatchResponseDTO;
+import com.example.calendarManager.level3.DTO.responseDTO.SchedulePostResponseDTO;
+import com.example.calendarManager.level3.DTO.responseDTO.SchedulePutResponseDTO;
+import com.example.calendarManager.level3.domain.Schedule;
+import com.example.calendarManager.level3.service.ScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping(value = "/schedule", consumes = "application/json")
 public class ScheduleController {
     private final ScheduleService service;
@@ -41,10 +41,10 @@ public class ScheduleController {
 
     @GetMapping
     public List<ScheduleGetResponseDTO> getSchedules(
-        @RequestParam(required = false, defaultValue = "") String writer,
+        @RequestParam(required = false, defaultValue = "") Long writerID,
         @RequestParam(required = false) LocalDate updatedAt
     ) {
-        return service.getScheduleList(new ScheduleGetRequestDTO(writer, updatedAt));
+        return service.getScheduleList(new ScheduleGetRequestDTO(writerID, updatedAt));
     }
 
     @PatchMapping

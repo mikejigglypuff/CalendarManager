@@ -39,6 +39,15 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository{
     }
 
     @Override
+    public ScheduleGetResponseDTO findOne(Long scheduleID) {
+        String sql = "select * from schedule where scheduleID = :scheduleID";
+        Map<String, Object> params = new HashMap<>();
+        params.put("scheduleID", scheduleID);
+
+        return namedParameterTemplate.queryForObject(sql, params, dtoRowMapper);
+    }
+
+    @Override
     public List<ScheduleGetResponseDTO> findAll() {
         String sql = "select * from schedule";
         return template.query(sql, dtoRowMapper);
