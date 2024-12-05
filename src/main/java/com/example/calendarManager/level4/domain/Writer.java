@@ -1,12 +1,12 @@
-package com.example.calendarManager.level3.domain;
+package com.example.calendarManager.level4.domain;
 
-import com.example.calendarManager.level3.DTO.requestDTO.WriterPostRequestDTO;
+import com.example.calendarManager.level4.DTO.requestDTO.WriterPostRequestDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-//@Table("writer")
+@Table("writer")
 public class Writer {
     @Id
     private Long writerID;

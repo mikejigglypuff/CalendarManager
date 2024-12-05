@@ -1,9 +1,10 @@
-package com.example.calendarManager.level3.repository;
+package com.example.calendarManager.level4.repository;
 
-import com.example.calendarManager.level3.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level3.domain.Schedule;
-import com.example.calendarManager.level3.mapper.ScheduleGetResponseDTORowMapper;
+import com.example.calendarManager.level4.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level4.domain.Schedule;
+import com.example.calendarManager.level4.mapper.ScheduleGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@Repository
+@Repository
 public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     private final JdbcTemplate template;
     private final NamedParameterJdbcTemplate namedParameterTemplate;
@@ -52,6 +53,16 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     public List<ScheduleGetResponseDTO> findAll() {
         String sql = "select * from schedule";
         return template.query(sql, dtoRowMapper);
+    }
+
+    @Override
+    public List<ScheduleGetResponseDTO> findAll(Pageable pageable) {
+        String sql = "select * from schedule limit :limit offset :offset";
+        Map<String, Object> params = new HashMap<>();
+        params.put("limit", pageable.getPageSize());
+        params.put("offset", pageable.getOffset());
+
+        return namedParameterTemplate.query(sql, params, dtoRowMapper);
     }
 
     @Override

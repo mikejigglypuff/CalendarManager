@@ -1,17 +1,19 @@
-package com.example.calendarManager.level3.service;
+package com.example.calendarManager.level4.service;
 
-import com.example.calendarManager.level3.DTO.requestDTO.ScheduleGetRequestDTO;
-import com.example.calendarManager.level3.DTO.requestDTO.SchedulePatchRequestDTO;
-import com.example.calendarManager.level3.DTO.requestDTO.SchedulePutRequestDTO;
-import com.example.calendarManager.level3.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level3.domain.Schedule;
-import com.example.calendarManager.level3.repository.ScheduleRepository;
+import com.example.calendarManager.level4.DTO.requestDTO.ScheduleGetPageRequestDTO;
+import com.example.calendarManager.level4.DTO.requestDTO.ScheduleGetRequestDTO;
+import com.example.calendarManager.level4.DTO.requestDTO.SchedulePatchRequestDTO;
+import com.example.calendarManager.level4.DTO.requestDTO.SchedulePutRequestDTO;
+import com.example.calendarManager.level4.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level4.domain.Schedule;
+import com.example.calendarManager.level4.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class ScheduleService {
     private final ScheduleRepository repository;
 
@@ -26,6 +28,10 @@ public class ScheduleService {
 
     public ScheduleGetResponseDTO getSchedule(Long scheduleID) {
         return repository.findOne(scheduleID);
+    }
+
+    public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
+        return repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()));
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetRequestDTO dto) {
