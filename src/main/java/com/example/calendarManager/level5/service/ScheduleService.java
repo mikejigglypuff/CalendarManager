@@ -65,4 +65,6 @@ public class ScheduleService {
     public int deleteSchedule(SchedulePutRequestDTO DTO) {
         return repository.delete(DTO.getScheduleID(), DTO.getPassword());
     }
+
+
 }

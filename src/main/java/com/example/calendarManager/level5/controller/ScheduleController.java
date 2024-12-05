@@ -9,6 +9,7 @@ import com.example.calendarManager.level5.domain.Schedule;
 import com.example.calendarManager.level5.service.ScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -62,4 +63,5 @@ public class ScheduleController {
         // 로깅 추가할 것
         return new SchedulePutResponseDTO(deleteResult);
     }
+
 }
