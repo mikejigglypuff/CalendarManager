@@ -1,14 +1,14 @@
-package com.example.calendarManager.level4.controller;
+package com.example.calendarManager.level5.controller;
 
-import com.example.calendarManager.level4.DTO.requestDTO.WriterPostRequestDTO;
-import com.example.calendarManager.level4.DTO.responseDTO.WriterGetResponseDTO;
-import com.example.calendarManager.level4.DTO.responseDTO.WriterPostResponseDTO;
-import com.example.calendarManager.level4.service.WriterService;
+import com.example.calendarManager.level5.DTO.requestDTO.WriterPostRequestDTO;
+import com.example.calendarManager.level5.DTO.responseDTO.WriterGetResponseDTO;
+import com.example.calendarManager.level5.DTO.responseDTO.WriterPostResponseDTO;
+import com.example.calendarManager.level5.service.WriterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-//@RestController
+@RestController
 @RequestMapping(value = "/writer", consumes = "application/json")
 public class WriterController {
     private final WriterService service;

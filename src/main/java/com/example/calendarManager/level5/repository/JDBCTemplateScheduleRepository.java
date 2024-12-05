@@ -1,8 +1,8 @@
-package com.example.calendarManager.level4.repository;
+package com.example.calendarManager.level5.repository;
 
-import com.example.calendarManager.level4.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level4.domain.Schedule;
-import com.example.calendarManager.level4.mapper.ScheduleGetResponseDTORowMapper;
+import com.example.calendarManager.level5.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level5.domain.Schedule;
+import com.example.calendarManager.level5.mapper.ScheduleGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@Repository
+@Repository
 public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     private final JdbcTemplate template;
     private final NamedParameterJdbcTemplate namedParameterTemplate;

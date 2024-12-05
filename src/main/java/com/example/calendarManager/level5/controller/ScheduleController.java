@@ -1,12 +1,12 @@
-package com.example.calendarManager.level4.controller;
+package com.example.calendarManager.level5.controller;
 
-import com.example.calendarManager.level4.DTO.requestDTO.*;
-import com.example.calendarManager.level4.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level4.DTO.responseDTO.SchedulePatchResponseDTO;
-import com.example.calendarManager.level4.DTO.responseDTO.SchedulePostResponseDTO;
-import com.example.calendarManager.level4.DTO.responseDTO.SchedulePutResponseDTO;
-import com.example.calendarManager.level4.domain.Schedule;
-import com.example.calendarManager.level4.service.ScheduleService;
+import com.example.calendarManager.level5.DTO.requestDTO.*;
+import com.example.calendarManager.level5.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level5.DTO.responseDTO.SchedulePatchResponseDTO;
+import com.example.calendarManager.level5.DTO.responseDTO.SchedulePostResponseDTO;
+import com.example.calendarManager.level5.DTO.responseDTO.SchedulePutResponseDTO;
+import com.example.calendarManager.level5.domain.Schedule;
+import com.example.calendarManager.level5.service.ScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping(value = "/schedule", consumes = "application/json")
 public class ScheduleController {
     private final ScheduleService service;

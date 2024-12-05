@@ -1,4 +1,4 @@
-package com.example.calendarManager.level4.config;
+package com.example.calendarManager.level5.config;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,7 +8,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-//@Configuration
+@Configuration
 public class JDBCConfig {
     @Value("${spring.datasource.url}")
     private String url;

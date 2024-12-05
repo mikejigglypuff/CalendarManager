@@ -39,26 +39,32 @@
 추가 예정
 
 ### API 명세서
-| 기능     | Method | URL                    | Request                       | Response                    | Status code |
-|--------|--------|------------------------|-------------------------------|-----------------------------|-------------|
-| 일정 생성  | POST   | /schedule              | [일정 등록 요청](#일정 등록 요청)         | [일정 등록 결과](#일정 등록 결과)       | 200: 정상등록   |
-| 일정 조회  | GET    | /schedule              | [일정 조회 요청](#일정 조회 요청)         | [일정 조회 정보](#일정 조회 정보)       | 200: 정상조회   |
-| 단일 일정 조회 | GET | /schedule/{scheduleID} | [단일 일정 조회 요청](#단일 일정 조회 요청)   | [단일 일정 조회 정보](#단일 일정 조회 정보) | 200: 정상조회 |
-| 일정 페이지 조회 | GET | /schedule/page         | [일정 페이지 조회 요청](#일정 페이지 조회 요청) | [일정 조회 정보](#일정 조회 정보)       | 200: 정상조회 |
-| 일정 수정  | PATCH  | /schedule              | [일정 수정 요청](#일정수정 요청)          | [일정 수정 결과](#일정 수정 결과)       | 200: 정상수정|
-| 일정 삭제 | PUT    | /schedule              | [일정 삭제 요청](#일정 삭제 요청)         | [일정 삭제 결과](#일정 삭제 결과)       | 200: 정상삭제 |
+| 기능     | Method | URL                    | Request                       | Response                    |
+|--------|--------|------------------------|-------------------------------|-----------------------------|
+| 일정 생성  | POST   | /schedule              | [일정 등록 요청](#일정 등록 요청)         | [일정 등록 결과](#일정 등록 결과)       |
+| 일정 조회  | GET    | /schedule              | [일정 조회 요청](#일정 조회 요청)         | [일정 조회 정보](#일정 조회 정보)       |
+| 단일 일정 조회 | GET | /schedule/{scheduleID} | [단일 일정 조회 요청](#단일 일정 조회 요청)   | [단일 일정 조회 정보](#단일 일정 조회 정보) |
+| 일정 페이지 조회 | GET | /schedule/page         | [일정 페이지 조회 요청](#일정 페이지 조회 요청) | [일정 조회 정보](#일정 조회 정보)       |
+| 일정 수정  | PATCH  | /schedule              | [일정 수정 요청](#일정수정 요청)          | [일정 수정 결과](#일정 수정 결과)       |
+| 일정 삭제 | PUT    | /schedule              | [일정 삭제 요청](#일정 삭제 요청)         | [일정 삭제 결과](#일정 삭제 결과)       |
 
-| 기능        | Method | URL                    | Request             | Response              | Status code |
-|-----------|--------|------------------------|---------------------|-----------------------|-------------|
-| 작성자 생성    | POST | /writer | [작성자 등록 요청](#작성자 등록 요청) | [작성자 등록 결과](#작성자 등록 결과) | 200: 정상등록
-| 단일 작성자 조회 | GET | /writer/{writerID| | [단일 작성자 조회 요청](#단일 작성자 조회 요청) | [단일 작성자 조회 정보](#단일 작성자 조회 정보) | 200: 정상등록 |
+| 기능        | Method | URL                    | Request             | Response              |
+|-----------|--------|------------------------|---------------------|-----------------------|
+| 작성자 생성    | POST | /writer | [작성자 등록 요청](#작성자 등록 요청) | [작성자 등록 결과](#작성자 등록 결과) |
+| 단일 작성자 조회 | GET | /writer/{writerID| [단일 작성자 조회 요청](#단일 작성자 조회 요청) | [단일 작성자 조회 정보](#단일 작성자 조회 정보) |
 
 #### 일정 등록 요청
+
 ```json 
 {
-   "works":        할일(TEXT),
-   "writer":      작성자번호(INT),
-   "password":    비밀번호(VARCHAR(20),
+   "header": {
+      "Content-Type": application/json
+   },
+   "body": {
+     "works":     할일(TEXT),
+     "writer":    작성자번호(INT),
+     "password":  비밀번호(VARCHAR(20)
+   }
 }
 ```
 
@@ -66,115 +72,205 @@
 
 ```json
 {
-   "message": 등록 결과(STRING)
+   "status":  200,
+   "message": 등록 결과("N건의 일정이 등록되었습니다.")
+},
+{
+   "status":   400(이미 사용중인 비밀번호인 경우),
+   "message":  등록 결과(STRING, "이미 사용중인 비밀번호입니다.")     
+},
+{
+  "status":   404(일치하는 작성자번호가 없는 경우),
+  "message":  등록 결과(STRING, "일치하는 작성자가 없습니다.")
 }
 ```
 
 #### 일정 조회 요청
-```http request
-// writer(optional):       작성자(INT)
-// updatedAt(optional):    수정일(DATE(YYYY-MM-DD))
-?writer=[작성자번호]&updatedAt=[YYYY-MM-DD]
+```json
+{
+   "header": {
+      "Content-Type": application/json
+   },
+   "query parameter": {
+      writer(optional):       작성자(INT),
+      updatedAt(optional):    수정일(DATE, "YYYY-MM-DD")
+   }
+}
 ```
 
 #### 일정 조회 정보
 ```json
-[
+{
+   "status":  200,
+   "message": 조회 결과("N건의 일정이 조회되었습니다."),
+   "body": [
    { 
-      "scheduleID":  식별번호(INT), 
+      "scheduleID":   식별번호(INT), 
       "works":        할일(TEXT), 
-      "writer":      작성자번호(INT), 
-      "createdAt":   등록일(DATETIME), 
-      "updatedAt":   수정일(DATETIME)
+      "writer":       작성자번호(INT), 
+      "createdAt":    등록일(DATETIME), 
+      "updatedAt":    수정일(DATETIME)
    },
    ...,
    {...}
-]
+  ]
+},
+{
+  "status":   404(일치하는 일정이 없는 경우),
+  "message":  조회 결과(STRING, "해당하는 일정이 없습니다.")
+}
 ```
 
 #### 단일 일정 조회 요청
-```http request
-// scheduleID:  일정 ID(INT)
-/schedule/{{scheduleID}}
+```json
+{
+   "header": {
+      "Content-Type": application/json
+   },
+   "path parameter": {
+      "scheduleID": 일정 ID(INT)
+   }
+}
 ```
 
 #### 단일 일정 조회 정보
 ```json
 {
-   "scheduleID":  식별번호(INT),
-   "works":        할일(TEXT),
-   "writer":      작성자번호(INT),
-   "createdAt":   등록일(DATETIME),
-   "updatedAt":   수정일(DATETIME)
+   "status":  200,
+   "message": 조회 결과("N건의 일정이 조회되었습니다."),
+   "body": {
+     "scheduleID":  식별번호(INT),
+     "works":       할일(TEXT),
+     "writer":      작성자번호(INT),
+     "createdAt":   등록일(DATETIME),
+     "updatedAt":   수정일(DATETIME)
+   },
+},
+{
+   "status":   404(일치하는 일정이 없는 경우),
+   "message":  조회 결과(STRING, "해당하는 일정이 없습니다.")
 }
 ```
 
 #### 일정 페이지 조회 요청
-```http request
-// offset: 조회할 페이지, 1부터 시작(INT)
-// size: 페이지 크기(INT)
-?offset=[조회할페이지]&size=[페이지크기]
+```json
+{
+   "header": {
+      "Content-Type": application/json
+   },
+   "query parameter": {
+      "offset": 조회할 페이지(INT, 1부터 시작)
+      "size":   페이지 크기(INT)
+   }
+},
 ```
 
 #### 일정 수정 요청
 ```json
-{ 
-   "password":          비밀번호(VARCHAR(20)), 
-   "works(optional)":    할일(TEXT), 
-   "writer(optional)":  작성자번호(INT)
+{
+   "header": {
+      "Content-Type": application/json
+   },
+   "body": {
+     "password":          비밀번호(VARCHAR(20)),
+     "works(optional)":   할일(TEXT),
+     "writer(optional)":  작성자번호(INT)
+   }
 }
 ```
 
 #### 일정 수정 결과
 ```json
 {
-   "message": 등록 결과(STRING)
+   "status":  200,
+   "message": 수정 결과(STRING, "N건의 일정이 수정되었습니다.")
+},
+{
+   "status":   404(일치하는 일정이 없는 경우),
+   "message":  수정 결과(STRING, "해당하는 일정이 없습니다.")
 }
 ```
 
 #### 일정 삭제 요청
+
 ```json
 {
-   "scheduleID":  식별번호(ID), 
-   "password":    비밀번호(VARCHAR(20))
+   "header": {
+      "Content-Type": application/json
+   },
+   "body": {
+     "scheduleID":  식별번호(ID),
+     "password":    비밀번호(VARCHAR(20))
+   }
 }
 ```
 
 #### 일정 삭제 결과
 ```json
 {
-   "message": 등록 결과(STRING)
+   "status":  200,
+   "message": 삭제 결과("N건의 일정이 삭제되었습니다.")
+},
+{
+   "status":   404(일치하는 일정이 없는 경우),
+   "message":  삭제 결과(STRING, "해당하는 일정이 없습니다.")
 }
 ```
 
 #### 작성자 등록 요청
+
 ```json
 {
-   "writerName": 작성자 이름(VARCHAR(15))
-   "email": 이메일(VARCHAR(75))
+   "header": {
+      "Content-Type": application/json
+   },
+   "body": {
+     "writerName":  작성자 이름(VARCHAR(15))
+     "email":       이메일(VARCHAR(75))
+   }
 }
 ```
 
 #### 작성자 등록 결과
 ```json
 {
-   "message": 등록 결과(STRING)
+   "status":  200,
+   "message": 등록 결과(STRING, "OOO님, 환영합니다.")
+},
+{
+  "status": 400(이미 등록된 이메일 주소인 경우),
+  "message": 등록 결과(STRING, "이미 사용중인 이메일 주소입니다.")
 }
 ```
 
 #### 단일 작성자 조회 요청
-```http request
-// writerID: 작성자 번호(INT)
-/writer/{writerID}
+```json
+{
+   "header": {
+      "Content-Type": application/json
+   },
+   "path parameter": {
+      "writerID": 작성자 번호(INT)
+   }
+}
 ```
 
 #### 단일 작성자 조회 정보
+
 ```json
 {
-   "writerID": 작성자 번호(INT),
-   "writerName": 작성자 이름(VARCHAR(15),
-   "email": 이메일(VARCHAR(75)),
-   "createdAt": 등록일(DATETIME),
-   "updatedAt": 수정일(DATETIME)
+   "status": 200,
+   "message": 조회결과("N명의 작성자가 조회되었습니다."),
+   "body": {
+     "writerID": 작성자번호(INT),
+     "writerName": 작성자이름(VARCHAR(15),
+     "email": 이메일(VARCHAR(75)),
+     "createdAt": 등록일(DATETIME),
+     "updatedAt": 수정일(DATETIME)
+   }
+},
+{
+  "status": 404(일치하는 작성자가 없는 경우),
+  "message": 조회결과("일치하는 작성자가 없습니다.")
 }
 ```

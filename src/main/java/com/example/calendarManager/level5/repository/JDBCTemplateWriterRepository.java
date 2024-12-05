@@ -1,8 +1,8 @@
-package com.example.calendarManager.level4.repository;
+package com.example.calendarManager.level5.repository;
 
-import com.example.calendarManager.level4.DTO.responseDTO.WriterGetResponseDTO;
-import com.example.calendarManager.level4.domain.Writer;
-import com.example.calendarManager.level4.mapper.WriterGetResponseDTORowMapper;
+import com.example.calendarManager.level5.DTO.responseDTO.WriterGetResponseDTO;
+import com.example.calendarManager.level5.domain.Writer;
+import com.example.calendarManager.level5.mapper.WriterGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Repository
+@Repository
 public class JDBCTemplateWriterRepository implements WriterRepository {
     private final NamedParameterJdbcTemplate namedTemplate;
     private final WriterGetResponseDTORowMapper rowMapper;
