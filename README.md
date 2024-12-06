@@ -63,7 +63,7 @@
    "body": {
      "works":     할일(TEXT),
      "writer":    작성자번호(INT),
-     "password":  비밀번호(VARCHAR(20)
+     "password":  비밀번호(VARCHAR(20), UNIQUE)
    }
 }
 ```
@@ -226,7 +226,7 @@
    },
    "body": {
      "writerName":  작성자 이름(VARCHAR(15))
-     "email":       이메일(VARCHAR(75))
+     "email":       이메일(VARCHAR(75), UNIQUE)
    }
 }
 ```

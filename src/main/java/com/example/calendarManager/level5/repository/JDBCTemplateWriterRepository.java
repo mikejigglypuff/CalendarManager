@@ -4,6 +4,7 @@ import com.example.calendarManager.level5.DTO.responseDTO.WriterGetResponseDTO;
 import com.example.calendarManager.level5.domain.Writer;
 import com.example.calendarManager.level5.mapper.WriterGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Repository
 public class JDBCTemplateWriterRepository implements WriterRepository {
@@ -38,6 +40,11 @@ public class JDBCTemplateWriterRepository implements WriterRepository {
         String sql = "select * from writer where writerID = :writerID";
         Map<String, Object> param = new HashMap<>();
         param.put("writerID", writerID);
-        return namedTemplate.queryForObject(sql, param, rowMapper);
+
+        try {
+            return namedTemplate.queryForObject(sql, param, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NoSuchElementException("일치하는 작성자가 없습니다.");
+        }
     }
 }

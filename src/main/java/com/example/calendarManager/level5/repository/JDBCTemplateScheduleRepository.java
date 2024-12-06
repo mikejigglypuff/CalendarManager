@@ -4,6 +4,7 @@ import com.example.calendarManager.level5.DTO.responseDTO.ScheduleGetResponseDTO
 import com.example.calendarManager.level5.domain.Schedule;
 import com.example.calendarManager.level5.mapper.ScheduleGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Repository
 public class JDBCTemplateScheduleRepository implements ScheduleRepository {
@@ -46,7 +48,11 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
         Map<String, Object> params = new HashMap<>();
         params.put("scheduleID", scheduleID);
 
-        return namedParameterTemplate.queryForObject(sql, params, dtoRowMapper);
+        try {
+            return namedParameterTemplate.queryForObject(sql, params, dtoRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NoSuchElementException("해당하는 일정이 없습니다.");
+        }
     }
 
     @Override

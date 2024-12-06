@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
-public class ScheduleService {
+public class ScheduleService{
     private final ScheduleRepository repository;
 
     @Autowired
@@ -23,7 +25,9 @@ public class ScheduleService {
     }
 
     public int addSchedule(Schedule schedule) {
-        return repository.save(schedule);
+        int affectedSchedules = repository.save(schedule);
+        checkAffectedRows(affectedSchedules);
+        return affectedSchedules;
     }
 
     public ScheduleGetResponseDTO getSchedule(Long scheduleID) {
@@ -31,40 +35,56 @@ public class ScheduleService {
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
-        return repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()));
+        List<ScheduleGetResponseDTO> schedules = repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()));
+        checkEmptyResult(schedules);
+        return schedules;
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetRequestDTO dto) {
         boolean hasWriterID = dto.hasWriterID(), isUpdatedAt = dto.isUpdatedAt();
 
+        List<ScheduleGetResponseDTO>  schedules;
         if(!hasWriterID && !isUpdatedAt) {
-            return repository.findAll();
+            schedules = repository.findAll();
         } else if(!hasWriterID) {
-            return repository.findByUpdatedAt(dto.getUpdatedAt());
+            schedules = repository.findByUpdatedAt(dto.getUpdatedAt());
         } else if(!isUpdatedAt) {
-            return repository.findByWriterID(dto.getWriterID());
+            schedules = repository.findByWriterID(dto.getWriterID());
         } else {
-            return repository.findByWriterIDAndUpdatedAt(dto.getWriterID(), dto.getUpdatedAt());
+            schedules = repository.findByWriterIDAndUpdatedAt(dto.getWriterID(), dto.getUpdatedAt());
         }
+
+        checkEmptyResult(schedules);
+        return schedules;
     }
 
     public int updateSchedule(SchedulePatchRequestDTO dto) {
         boolean hasWorks = dto.hasWorks(), hasWriterID = dto.hasWriterID();
 
+        int affectedSchedules = 0;
         if(hasWorks && hasWriterID) {
-            return repository.updateWorksAndWriterID(dto.getPassword(), dto.getWorks(), dto.getWriterID());
+            affectedSchedules = repository.updateWorksAndWriterID(dto.getPassword(), dto.getWorks(), dto.getWriterID());
         } else if(hasWorks) {
-            return repository.updateWorks(dto.getPassword(), dto.getWorks());
+            affectedSchedules = repository.updateWorks(dto.getPassword(), dto.getWorks());
         } else if(hasWriterID) {
-            return repository.updateWriterID(dto.getPassword(), dto.getWriterID());
+            affectedSchedules = repository.updateWriterID(dto.getPassword(), dto.getWriterID());
         }
 
-        return 0;
+        checkAffectedRows(affectedSchedules);
+        return affectedSchedules;
     }
 
     public int deleteSchedule(SchedulePutRequestDTO DTO) {
-        return repository.delete(DTO.getScheduleID(), DTO.getPassword());
+        int affectedSchedules = repository.delete(DTO.getScheduleID(), DTO.getPassword());
+        checkAffectedRows(affectedSchedules);
+        return affectedSchedules;
     }
 
+    public void checkEmptyResult(List<ScheduleGetResponseDTO> result) throws NoSuchElementException {
+        if(result.isEmpty()) throw new NoSuchElementException("해당하는 일정이 없습니다.");
+    }
 
+    public void checkAffectedRows(int result) throws NoSuchElementException {
+        if(result == 0) throw new NoSuchElementException("해당하는 일정이 없습니다.");
+    }
 }
