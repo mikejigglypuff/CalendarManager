@@ -1,10 +1,9 @@
-package com.example.calendarManager.level5.repository;
+package com.example.calendarManager.level6.repository;
 
-import com.example.calendarManager.level5.DTO.responseDTO.WriterGetResponseDTO;
-import com.example.calendarManager.level5.domain.Writer;
-import com.example.calendarManager.level5.mapper.WriterGetResponseDTORowMapper;
+import com.example.calendarManager.level6.DTO.responseDTO.WriterGetResponseDTO;
+import com.example.calendarManager.level6.domain.Writer;
+import com.example.calendarManager.level6.mapper.WriterGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -13,9 +12,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
-//@Repository
+@Repository
 public class JDBCTemplateWriterRepository implements WriterRepository {
     private final NamedParameterJdbcTemplate namedTemplate;
     private final WriterGetResponseDTORowMapper rowMapper;

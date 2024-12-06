@@ -61,7 +61,7 @@
       "Content-Type": application/json
    },
    "body": {
-     "works":     할일(TEXT),
+     "works":     할일(VARCHAR(200)),
      "writer":    작성자번호(INT),
      "password":  비밀번호(VARCHAR(20), UNIQUE)
    }
@@ -106,7 +106,7 @@
    "body": [
    { 
       "scheduleID":   식별번호(INT), 
-      "works":        할일(TEXT), 
+      "works":        할일(VARCHAR(200)), 
       "writer":       작성자번호(INT), 
       "createdAt":    등록일(DATETIME), 
       "updatedAt":    수정일(DATETIME)
@@ -140,7 +140,7 @@
    "message": 조회 결과("N건의 일정이 조회되었습니다."),
    "body": {
      "scheduleID":  식별번호(INT),
-     "works":       할일(TEXT),
+     "works":       할일(VARCHAR(200)),
      "writer":      작성자번호(INT),
      "createdAt":   등록일(DATETIME),
      "updatedAt":   수정일(DATETIME)
@@ -159,8 +159,8 @@
       "Content-Type": application/json
    },
    "query parameter": {
-      "offset": 조회할 페이지(INT, 1부터 시작)
-      "size":   페이지 크기(INT)
+      "offset(optional)": 조회할 페이지(INT, 1부터 시작)
+      "size":             페이지 크기(INT)
    }
 },
 ```
@@ -173,7 +173,7 @@
    },
    "body": {
      "password":          비밀번호(VARCHAR(20)),
-     "works(optional)":   할일(TEXT),
+     "works(optional)":   할일(VARCHAR(200)),
      "writer(optional)":  작성자번호(INT)
    }
 }

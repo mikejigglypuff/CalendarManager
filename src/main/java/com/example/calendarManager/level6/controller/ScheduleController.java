@@ -1,21 +1,21 @@
-package com.example.calendarManager.level5.controller;
+package com.example.calendarManager.level6.controller;
 
-import com.example.calendarManager.level5.DTO.requestDTO.*;
-import com.example.calendarManager.level5.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level5.DTO.responseDTO.SchedulePatchResponseDTO;
-import com.example.calendarManager.level5.DTO.responseDTO.SchedulePostResponseDTO;
-import com.example.calendarManager.level5.DTO.responseDTO.SchedulePutResponseDTO;
-import com.example.calendarManager.level5.domain.Schedule;
-import com.example.calendarManager.level5.service.ScheduleService;
+import com.example.calendarManager.level6.DTO.requestDTO.*;
+import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.SchedulePatchResponseDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.SchedulePostResponseDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.SchedulePutResponseDTO;
+import com.example.calendarManager.level6.domain.Schedule;
+import com.example.calendarManager.level6.service.ScheduleService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
-//@RestController
+@RestController
 @RequestMapping(value = "/schedule", consumes = "application/json")
 public class ScheduleController {
     private final ScheduleService service;
@@ -33,12 +33,13 @@ public class ScheduleController {
     }
 
     @GetMapping("/{scheduleID}")
-    public ScheduleGetResponseDTO getSchedule(@PathVariable Long scheduleID) {
+    public ScheduleGetResponseDTO getSchedule(
+        @Positive(message = "scheduleID는 양의 정수여야 합니다.") @PathVariable Long scheduleID) {
         return service.getSchedule(scheduleID);
     }
 
     @GetMapping("/page")
-    public List<ScheduleGetResponseDTO> getSchedulePage(ScheduleGetPageRequestDTO requestDTO) {
+    public List<ScheduleGetResponseDTO> getSchedulePage(@Valid ScheduleGetPageRequestDTO requestDTO) {
         return service.getScheduleList(requestDTO);
     }
 

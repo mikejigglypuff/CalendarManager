@@ -1,21 +1,19 @@
-package com.example.calendarManager.level5.service;
+package com.example.calendarManager.level6.service;
 
-import com.example.calendarManager.level5.DTO.requestDTO.ScheduleGetPageRequestDTO;
-import com.example.calendarManager.level5.DTO.requestDTO.ScheduleGetRequestDTO;
-import com.example.calendarManager.level5.DTO.requestDTO.SchedulePatchRequestDTO;
-import com.example.calendarManager.level5.DTO.requestDTO.SchedulePutRequestDTO;
-import com.example.calendarManager.level5.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level5.domain.Schedule;
-import com.example.calendarManager.level5.repository.ScheduleRepository;
+import com.example.calendarManager.level6.DTO.requestDTO.ScheduleGetPageRequestDTO;
+import com.example.calendarManager.level6.DTO.requestDTO.ScheduleGetRequestDTO;
+import com.example.calendarManager.level6.DTO.requestDTO.SchedulePatchRequestDTO;
+import com.example.calendarManager.level6.DTO.requestDTO.SchedulePutRequestDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level6.domain.Schedule;
+import com.example.calendarManager.level6.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-//@Service
+@Service
 public class ScheduleService{
     private final ScheduleRepository repository;
 

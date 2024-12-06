@@ -1,17 +1,14 @@
-package com.example.calendarManager.level5.service;
+package com.example.calendarManager.level6.service;
 
-import com.example.calendarManager.level5.DTO.requestDTO.WriterPostRequestDTO;
-import com.example.calendarManager.level5.DTO.responseDTO.WriterGetResponseDTO;
-import com.example.calendarManager.level5.DTO.responseDTO.WriterPostResponseDTO;
-import com.example.calendarManager.level5.domain.Writer;
-import com.example.calendarManager.level5.repository.WriterRepository;
+import com.example.calendarManager.level6.DTO.requestDTO.WriterPostRequestDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.WriterGetResponseDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.WriterPostResponseDTO;
+import com.example.calendarManager.level6.domain.Writer;
+import com.example.calendarManager.level6.repository.WriterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-//@Service
+@Service
 public class WriterService{
     private final WriterRepository repository;
 

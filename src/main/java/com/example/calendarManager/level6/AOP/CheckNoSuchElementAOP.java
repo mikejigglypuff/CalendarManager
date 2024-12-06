@@ -1,8 +1,8 @@
-package com.example.calendarManager.level5.AOP;
+package com.example.calendarManager.level6.AOP;
 
-import com.example.calendarManager.level5.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level5.exception.NoMatchScheduleException;
-import com.example.calendarManager.level5.exception.NoMatchWriterException;
+import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level6.exception.NoMatchScheduleException;
+import com.example.calendarManager.level6.exception.NoMatchWriterException;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class CheckNoSuchElementAOP {
     @AfterReturning(
         pointcut = "execution(* com.example.calendarManager.*.repository.JDBCTemplateScheduleRepository.find*(..))" +
             " && !execution(* com.example.calendarManager.*.repository.JDBCTemplateScheduleRepository.findOne(..))",
         returning = "result"
     )
-    public void checkEmptyScheduleResult(List<ScheduleGetResponseDTO> result) throws NoMatchScheduleException{
+    public void checkEmptyScheduleResult(List<ScheduleGetResponseDTO> result) throws NoMatchScheduleException {
         if(result.isEmpty()) throw new NoMatchScheduleException();
     }
 

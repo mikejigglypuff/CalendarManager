@@ -1,15 +1,15 @@
-package com.example.calendarManager.level5.mapper;
+package com.example.calendarManager.level6.mapper;
 
 
-import com.example.calendarManager.level5.DTO.responseDTO.WriterGetResponseDTO;
-import com.example.calendarManager.level5.domain.Writer;
+import com.example.calendarManager.level6.DTO.responseDTO.WriterGetResponseDTO;
+import com.example.calendarManager.level6.domain.Writer;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//@Component
+@Component
 public class WriterGetResponseDTORowMapper implements RowMapper<WriterGetResponseDTO> {
     @Override
     public WriterGetResponseDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
