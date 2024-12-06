@@ -48,11 +48,7 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
         Map<String, Object> params = new HashMap<>();
         params.put("scheduleID", scheduleID);
 
-        try {
-            return namedParameterTemplate.queryForObject(sql, params, dtoRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NoSuchElementException("해당하는 일정이 없습니다.");
-        }
+        return namedParameterTemplate.queryForObject(sql, params, dtoRowMapper);
     }
 
     @Override

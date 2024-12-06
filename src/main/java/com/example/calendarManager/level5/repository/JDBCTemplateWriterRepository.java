@@ -41,10 +41,6 @@ public class JDBCTemplateWriterRepository implements WriterRepository {
         Map<String, Object> param = new HashMap<>();
         param.put("writerID", writerID);
 
-        try {
-            return namedTemplate.queryForObject(sql, param, rowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NoSuchElementException("일치하는 작성자가 없습니다.");
-        }
+        return namedTemplate.queryForObject(sql, param, rowMapper);
     }
 }
