@@ -24,8 +24,8 @@ public class CheckNoSuchElementAOP {
     }
 
     @AfterReturning(
-        pointcut = "execution(* com.example.calendarManager.*.repository.JDBCTemplateWriterRepository.*(..))" +
-            " && !execution(* com.example.calendarManager.*.service.ScheduleService.get*(..))",
+        pointcut = "execution(* com.example.calendarManager.*.repository.JDBCTemplateScheduleRepository.*(..))" +
+            " && !execution(* com.example.calendarManager.*.repository.JDBCTemplateScheduleRepository.find*(..))",
         returning = "result"
     )
     public void hasAffectedSchedule(int result) throws NoMatchScheduleException {
@@ -34,7 +34,7 @@ public class CheckNoSuchElementAOP {
 
     @AfterReturning(
         pointcut = "execution(* com.example.calendarManager.*.repository.JDBCTemplateWriterRepository.*(..))" +
-            " && !execution(* com.example.calendarManager.*.service.ScheduleService.get*(..))",
+            " && !execution(* com.example.calendarManager.*.repository.JDBCTemplateWriterRepository.find*(..))",
         returning = "result"
     )
     public void hasAffectedWriter(int result) throws NoMatchWriterException {
@@ -47,7 +47,6 @@ public class CheckNoSuchElementAOP {
     )
     public void checkNotOneSchedule(IncorrectResultSizeDataAccessException e) throws NoMatchScheduleException {
         if(e.getActualSize() == 0) throw new NoMatchScheduleException();
-        // 결과값이 2개 이상인 경우에 대해서 따로 처리하도록 구현하기
     }
 
     @AfterThrowing(
@@ -56,6 +55,5 @@ public class CheckNoSuchElementAOP {
     )
     public void checkNotOneWriter(IncorrectResultSizeDataAccessException e) throws NoMatchWriterException {
         if(e.getActualSize() == 0) throw new NoMatchWriterException();
-        // 결과값이 2개 이상인 경우에 대해서 따로 처리하도록 구현하기
     }
 }

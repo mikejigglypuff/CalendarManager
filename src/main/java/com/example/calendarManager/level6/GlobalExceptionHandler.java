@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("bad request: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("bad request: " + e.getMessage());
     }
 
     // validator 검증 실패해 생긴 MethodArgumentNotValidException 처리
@@ -36,6 +36,6 @@ public class GlobalExceptionHandler {
             body.put(error.getField(), error.getDefaultMessage())
         );
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 }
