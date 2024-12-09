@@ -12,8 +12,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,21 +82,21 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     public int updateWorks(Map<String, Object> param) {
         return namedParameterTemplate.update(
             "update schedule set works = :works, updatedAt = :updatedAt" +
-            " where password = :password", param);
+                " where password = :password", param);
     }
 
     @Override
     public int updateWriterID(Map<String, Object> param) {
         return namedParameterTemplate.update(
             "update schedule set writerID=:writerID, updatedAt = :updatedAt" +
-            " where password = :password", param);
+                " where password = :password", param);
     }
 
     @Override
     public int updateWorksAndWriterID(Map<String, Object> param) {
         return namedParameterTemplate.update(
             "update schedule set works=:works, writerID=:writerID, updatedAt = :updatedAt"
-            + " where password = :password", param);
+                + " where password = :password", param);
     }
 
     @Override

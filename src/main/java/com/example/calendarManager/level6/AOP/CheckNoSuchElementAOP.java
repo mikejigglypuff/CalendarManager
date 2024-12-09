@@ -20,7 +20,7 @@ public class CheckNoSuchElementAOP {
         returning = "result"
     )
     public void checkEmptyScheduleResult(List<ScheduleGetResponseDTO> result) throws NoMatchScheduleException {
-        if(result.isEmpty()) throw new NoMatchScheduleException();
+        if (result.isEmpty()) throw new NoMatchScheduleException();
     }
 
     @AfterReturning(
@@ -29,7 +29,7 @@ public class CheckNoSuchElementAOP {
         returning = "result"
     )
     public void hasAffectedSchedule(int result) throws NoMatchScheduleException {
-        if(result == 0) throw new NoMatchScheduleException();
+        if (result == 0) throw new NoMatchScheduleException();
     }
 
     @AfterReturning(
@@ -38,7 +38,7 @@ public class CheckNoSuchElementAOP {
         returning = "result"
     )
     public void hasAffectedWriter(int result) throws NoMatchWriterException {
-        if(result == 0) throw new NoMatchWriterException();
+        if (result == 0) throw new NoMatchWriterException();
     }
 
     @AfterThrowing(
@@ -46,7 +46,7 @@ public class CheckNoSuchElementAOP {
         throwing = "e"
     )
     public void checkNotOneSchedule(IncorrectResultSizeDataAccessException e) throws NoMatchScheduleException {
-        if(e.getActualSize() == 0) throw new NoMatchScheduleException();
+        if (e.getActualSize() == 0) throw new NoMatchScheduleException();
     }
 
     @AfterThrowing(
@@ -54,6 +54,6 @@ public class CheckNoSuchElementAOP {
         throwing = "e"
     )
     public void checkNotOneWriter(IncorrectResultSizeDataAccessException e) throws NoMatchWriterException {
-        if(e.getActualSize() == 0) throw new NoMatchWriterException();
+        if (e.getActualSize() == 0) throw new NoMatchWriterException();
     }
 }

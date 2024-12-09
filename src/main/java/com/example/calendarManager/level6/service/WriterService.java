@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WriterService{
+public class WriterService {
     private final WriterRepository repository;
 
     @Autowired

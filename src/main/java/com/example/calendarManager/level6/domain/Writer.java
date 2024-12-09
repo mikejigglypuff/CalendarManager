@@ -32,13 +32,23 @@ public class Writer {
         this.updatedAt = updatedAt;
     }
 
-    public Long getWriterID() { return writerID; }
+    public Long getWriterID() {
+        return writerID;
+    }
 
-    public String getWriterName() { return writerName; }
+    public String getWriterName() {
+        return writerName;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 }

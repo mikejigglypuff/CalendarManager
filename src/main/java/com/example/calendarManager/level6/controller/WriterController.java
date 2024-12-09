@@ -6,7 +6,6 @@ import com.example.calendarManager.level6.DTO.responseDTO.WriterGetResponseDTO;
 import com.example.calendarManager.level6.DTO.responseDTO.WriterPostResponseDTO;
 import com.example.calendarManager.level6.service.WriterService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,7 @@ public class WriterController {
     }
 
     @GetMapping(value = "/{writerID}")
-    public WriterGetResponseDTO getWriter (@PathVariable Long writerID) {
+    public WriterGetResponseDTO getWriter(@PathVariable Long writerID) {
         return service.getWriter(new WriterGetOneRequestDTO(writerID));
     }
 }

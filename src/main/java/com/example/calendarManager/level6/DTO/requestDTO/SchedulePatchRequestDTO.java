@@ -20,8 +20,8 @@ public class SchedulePatchRequestDTO extends RequestDTO {
         this.works = works;
         this.writerID = writerID;
         map.put("password", password);
-        if(this.hasWorks()) map.put("works", works);
-        if(this.hasWriterID()) map.put("writerID", writerID);
+        if (this.hasWorks()) map.put("works", works);
+        if (this.hasWriterID()) map.put("writerID", writerID);
     }
 
     public String getWorks() {
@@ -36,6 +36,11 @@ public class SchedulePatchRequestDTO extends RequestDTO {
         return writerID;
     }
 
-    private boolean hasWorks() { return this.works != null; }
-    private boolean hasWriterID(){ return this.writerID != null; }
+    private boolean hasWorks() {
+        return this.works != null;
+    }
+
+    private boolean hasWriterID() {
+        return this.writerID != null;
+    }
 }

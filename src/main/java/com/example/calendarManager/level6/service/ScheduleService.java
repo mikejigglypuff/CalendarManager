@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScheduleService{
+public class ScheduleService {
     private final ScheduleRepository repository;
 
     @Autowired
@@ -37,11 +37,11 @@ public class ScheduleService{
         Map<String, Object> param = dto.getMap();
         boolean hasWriterID = param.containsKey("writerID"), isUpdatedAt = param.containsKey("updatedAt");
 
-        if(!hasWriterID && !isUpdatedAt) {
+        if (!hasWriterID && !isUpdatedAt) {
             return repository.findAll();
-        } else if(!hasWriterID) {
+        } else if (!hasWriterID) {
             return repository.findByUpdatedAt(param);
-        } else if(!isUpdatedAt) {
+        } else if (!isUpdatedAt) {
             return repository.findByWriterID(param);
         }
 
@@ -53,11 +53,11 @@ public class ScheduleService{
         param.put("updatedAt", LocalDateTime.now());
         boolean hasWorks = param.containsKey("works"), hasWriterID = param.containsKey("writerID");
 
-        if(hasWorks && hasWriterID) {
+        if (hasWorks && hasWriterID) {
             return repository.updateWorksAndWriterID(param);
-        } else if(hasWorks) {
+        } else if (hasWorks) {
             return repository.updateWorks(param);
-        } else if(hasWriterID) {
+        } else if (hasWriterID) {
             return repository.updateWriterID(param);
         }
 

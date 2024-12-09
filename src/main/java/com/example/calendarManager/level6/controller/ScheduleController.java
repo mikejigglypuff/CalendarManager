@@ -8,7 +8,6 @@ import com.example.calendarManager.level6.DTO.responseDTO.SchedulePutResponseDTO
 import com.example.calendarManager.level6.domain.Schedule;
 import com.example.calendarManager.level6.service.ScheduleService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

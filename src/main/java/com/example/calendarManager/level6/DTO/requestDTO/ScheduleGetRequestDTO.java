@@ -15,13 +15,23 @@ public class ScheduleGetRequestDTO extends RequestDTO {
     public ScheduleGetRequestDTO(Long writerID, LocalDate updatedAt) {
         this.writerID = writerID;
         this.updatedAt = updatedAt;
-        if(this.hasWriterID()) map.put("writerID", writerID);
-        if(this.isUpdatedAt()) map.put("updatedAt", updatedAt);
+        if (this.hasWriterID()) map.put("writerID", writerID);
+        if (this.isUpdatedAt()) map.put("updatedAt", updatedAt);
     }
 
-    public Long getWriterID() { return writerID; }
-    public LocalDate getUpdatedAt() { return updatedAt; }
+    public Long getWriterID() {
+        return writerID;
+    }
 
-    private boolean hasWriterID() { return this.writerID != null; }
-    private boolean isUpdatedAt() { return updatedAt != null; }
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    private boolean hasWriterID() {
+        return this.writerID != null;
+    }
+
+    private boolean isUpdatedAt() {
+        return updatedAt != null;
+    }
 }
