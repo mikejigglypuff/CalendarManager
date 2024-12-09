@@ -44,11 +44,8 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public List<ScheduleGetResponseDTO> getSchedules(
-        @RequestParam(required = false, defaultValue = "") Long writerID,
-        @RequestParam(required = false) LocalDate updatedAt
-    ) {
-        return service.getScheduleList(new ScheduleGetRequestDTO(writerID, updatedAt));
+    public List<ScheduleGetResponseDTO> getSchedules(@Valid @ModelAttribute ScheduleGetRequestDTO dto) {
+        return service.getScheduleList(dto);
     }
 
     @PatchMapping
@@ -57,6 +54,7 @@ public class ScheduleController {
         return new SchedulePatchResponseDTO(patchResult);
     }
 
+    // DELETE method 사용 시 비밀번호를 request body에 담을 수 없으므로 PUT 메서드를 사용함
     @PutMapping
     public SchedulePutResponseDTO putSchedule(@Valid @RequestBody SchedulePutRequestDTO requestDTO) {
         int deleteResult = service.deleteSchedule(requestDTO);

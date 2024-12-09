@@ -50,7 +50,7 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     @Override
     public List<ScheduleGetResponseDTO> findAll(Pageable pageable, Map<String, Object> param) {
         return namedParameterTemplate.query(
-            "select * from schedule limit :limit offset :offset", param, dtoRowMapper);
+            "select * from schedule limit :size offset :offset", param, dtoRowMapper);
     }
 
     @Override

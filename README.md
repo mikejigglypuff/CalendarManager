@@ -1,4 +1,4 @@
-## 일정 관리 앱 
+## 일정 관리 앱
 
 ### 커밋 컨벤션
 아래와 같은 형식을 따라 커밋하세요.
@@ -36,7 +36,7 @@
 
 
 ### ERD
-추가 예정
+![ERD Diagram](/doc/img/ERD.png)
 
 ### API 명세서
 | 기능     | Method | URL                    | Request                       | Response                    |
@@ -52,6 +52,92 @@
 |-----------|--------|------------------------|---------------------|-----------------------|
 | 작성자 생성    | POST | /writer | [작성자 등록 요청](#작성자 등록 요청) | [작성자 등록 결과](#작성자 등록 결과) |
 | 단일 작성자 조회 | GET | /writer/{writerID| [단일 작성자 조회 요청](#단일 작성자 조회 요청) | [단일 작성자 조회 정보](#단일 작성자 조회 정보) |
+
+
+### 구현 사항들
+1. 일정 CRUD
+
+
+- 사용자에게 일, 작성자 ID, 비밀번호를 입력받아 일정을 생성할 수 있다.
+   ![postScheduleReq](doc/img/postScheduleReq.png)
+   ![postScheduleRes](doc/img/postScheduleRes.png)
+  - 이 때 작성자 ID는 작성자 테이블의 기본키와 연결된 외래키이다.
+  - 존재하지 않는 ID로 일정 작성 시 에러가 반환된다.
+   //캡쳐
+  - 중복된 비밀번호는 사용할 수 없다.
+   //캡쳐
+
+
+- 일정 ID, 작성자 ID, 수정일 등을 통해 일정을 조회할 수 있다.
+  ![getScheduleByIDReq](doc/img/getScheduleByIDReq.png)
+  ![getScheduleByIDRes](doc/img/getScheduleByIDRes.png)
+  ![getScheduleByWriterIDUpdatedAt](doc/img/getScheduleByWriterIDUpdatedAtReq.png)
+  ![getScheduleByWriterIDUpdatedAt](doc/img/getScheduleByWriterIDUpdatedAtRes.png)
+  - 혹은 아무것도 입력하지 않고 모든 일정을 조회할 수도 있다.
+    ![getAllSchedulesReq](doc/img/getAllScheduleReq.png)
+    ![getAllSchedulesRes](doc/img/getAllScheduleRes.png)
+
+
+- 비밀번호, 일, 작성자 ID를 입력받아 일정을 수정할 수 있다.
+   ![patchScheduleReq](doc/img/patchScheduleReq.png)
+   ![patchScheduleRes](doc/img/patchScheduleRes.png)
+  - 비밀번호는 필수로 입력해야 하며, 일과 ID 중 하나 이상은 입력에 포함되어야 한다.
+    ![patchScheduleWithoutPWReq](doc/img/patchWithoutPWReq.png)
+    ![patchScheduleWithoutPWRes](doc/img/patchScheduleRes.png)
+
+
+- 비밀번호와 일정 ID를 입력받아 일정을 삭제할 수 있다.
+   ![deleteScheduleReq](doc/img/deleteScheduleReq.png)
+   ![deleteScheduleRes](doc/img/deleteScheduleRes.png)
+  
+
+2. 작성자 생성 및 조회
+
+
+- 작성자 이름, 이메일을 입력받아 작성자를 생성할 수 있다.
+   ![postWriterReq](doc/img/postWriterReq.png)
+   ![postWriterRes](doc/img/postWriterRes.png)
+
+
+  - 중복된 이메일은 사용할 수 없다.
+    //캡처
+
+
+- 작성자 ID를 기반으로 작성자를 조회할 수 있다.
+   ![getByWriterIDReq](doc/img/getWriterByIDReq.png)
+   ![getByWriterIDRes](doc/img/getWriterByIDRes.png)
+- 작성자 이름 기반으로 한 조회 기능 추가 예정
+
+
+3. 일정 페이징 조회
+
+
+- query parameter로 offset, size를 입력해 원하는 위치부터 원하는 양의 일정을 조회할 수 있다.
+    ![pagingReq](doc/img/pagingReq.png)
+    ![pagingRes](doc/img/pagingRes.png)
+   
+
+  - offset은 1부터 시작하며, size는 양의 정수여야 한다.
+   ![sizeMustBePositive](doc/img/sizeMustBePositive.png)
+
+
+4. 요청/응답 데이터 검증 및 예외 처리
+
+
+- 요청 데이터들이 정의된 형식에 맞는지 검증하도록 하고, 맞지 않다면 400 상태코드를 반환하도록 하였다.
+   ![badRequest](doc/img/badRequest.png)
+
+- Repository에 AOP를 적용해 조회 결과 리스트 길이 혹은 쿼리에 영향받은 row 수가 0이 아닌지를 검사하도록 하였다.
+   ![checkEmptyAOP](doc/img/checkEmptyAOP.png)
+  - 결과값이 0이라면 상황에 맞는 에러 메시지와 404 응답코드를 반환하도록 하였다.
+
+
+5. API 테스트
+
+
+- postman을 이용해 API의 각 기능들이 잘 동작하는지 확인할 수 있도록 입력 상황별 테스트들을 구현하였다.
+   ![api tests](doc/img/apitests.png)
+
 
 #### 일정 등록 요청
 
