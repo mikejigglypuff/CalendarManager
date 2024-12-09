@@ -35,6 +35,9 @@ public class WriterController {
         return service.getWriter(new WriterGetOneRequestDTO(writerID));
     }
 
+    // 프론트와의 연동을 고려해 추가한 기능
+    // 작성자 등록 시 사용자 입장에서는 식별자 값을 바로 알 수 없음
+    // 이 때 작성자 이름으로 식별자 값을 얻을 수 있도록 하기 위함
     @GetMapping
     public List<WriterGetResponseDTO> getWritersByName(@Valid @ModelAttribute WriterGetRequestDTO dto) {
         return service.getWriterByName(dto);

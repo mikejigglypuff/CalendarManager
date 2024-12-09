@@ -1,5 +1,7 @@
 package com.example.calendarManager.level6;
 
+import com.example.calendarManager.level6.exception.QueryException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,19 +9,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 // 전역 범위에서 예외 발생 시의 HTTP 응답을 정의하는 클래스
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    // 외래키 참조 무결성 위반에 대한 처리
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("bad request: " + e.getMessage());
-    }
-
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No element found: " + e.getMessage());
@@ -42,4 +40,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
+
+    @ExceptionHandler(QueryException.class)
+    public ResponseEntity<String> handleQueryException(QueryException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<String> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 (외래)키 또는 컬럼을 입력하였습니다.");
+    }
+
 }

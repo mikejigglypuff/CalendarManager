@@ -59,12 +59,12 @@
 ```json 
 {
    "header": {
-      "Content-Type": application/json
+      "Content-Type": "application/json"
    },
    "body": {
-     "works":     할일(VARCHAR(200)),
-     "writer":    작성자번호(INT),
-     "password":  비밀번호(VARCHAR(20), UNIQUE)
+     "works":     "할일(VARCHAR(200))",
+     "writer":    "작성자번호(INT)",
+     "password":  "비밀번호(VARCHAR(20), UNIQUE)"
    }
 }
 ```
@@ -73,16 +73,18 @@
 
 ```json
 {
-   "status":  200,
-   "message": 등록 결과("N건의 일정이 등록되었습니다.")
-},
-{
-   "status":   400(이미 사용중인 비밀번호인 경우),
-   "message":  등록 결과(STRING, "이미 사용중인 비밀번호입니다.")     
-},
-{
-  "status":   404(일치하는 작성자번호가 없는 경우),
-  "message":  등록 결과(STRING, "일치하는 작성자가 없습니다.")
+    {
+      "status": 200,
+      "message": "등록 결과('N건의 일정이 등록되었습니다.')"
+    },
+    {
+    "status": 400(이미 사용중인 비밀번호인 경우),
+    "message":  "등록 결과(STRING, '이미 사용중인 비밀번호입니다.')"
+    },
+    {
+    "status": 404(일치하는 작성자번호가 없는 경우),
+    "message": 등록 결과(STRING, "일치하는 작성자가 없습니다.")
+    }
 }
 ```
 
@@ -90,36 +92,38 @@
 ```json
 {
    "header": {
-      "Content-Type": application/json
+      "Content-Type": "application/json"
    },
    "query parameter": {
-      writer(optional):       작성자(INT),
-      updatedAt(optional):    수정일(DATE, "YYYY-MM-DD")
+      "writer(optional)":       "작성자(INT)",
+      "updatedAt(optional)":    "수정일(DATE, 'YYYY-MM-DD')"
    }
 }
 ```
 
 #### 일정 조회 정보
 ```json
-{
-   "status":  200,
-   "message": 조회 결과("N건의 일정이 조회되었습니다."),
-   "body": [
-   { 
-      "scheduleID":   식별번호(INT), 
-      "works":        할일(VARCHAR(200)), 
-      "writer":       작성자번호(INT), 
-      "createdAt":    등록일(DATETIME), 
-      "updatedAt":    수정일(DATETIME)
-   },
-   ...,
-   {...}
-  ]
-},
-{
-  "status":   404(일치하는 일정이 없는 경우),
-  "message":  조회 결과(STRING, "해당하는 일정이 없습니다.")
-}
+[
+  {
+       "status":  200,
+       "message": "조회 결과('N건의 일정이 조회되었습니다.')",
+       "body": [
+       { 
+          "scheduleID":   "식별번호(INT)", 
+          "works":        "할일(VARCHAR(200))", 
+          "writer":       "작성자번호(INT)", 
+          "createdAt":    "등록일(DATETIME)", 
+          "updatedAt":    "수정일(DATETIME)"
+       },
+       "...",
+       {}
+      ]
+    },
+    {
+      "status":   "404(일치하는 일정이 없는 경우)",
+      "message":  "조회 결과(STRING, '해당하는 일정이 없습니다.')"
+    }
+]
 ```
 
 #### 단일 일정 조회 요청
@@ -285,9 +289,8 @@
   ![postScheduleRes](doc/img/postScheduleRes.png)
     - 이 때 작성자 ID는 작성자 테이블의 기본키와 연결된 외래키이다.
     - 존재하지 않는 ID로 일정 작성 시 에러가 반환된다.
-      //캡쳐
+      ![dataIntegrityException](doc/img/dataIntegrityException.png)
     - 중복된 비밀번호는 사용할 수 없다.
-      //캡쳐
 
 
 - 일정 ID, 작성자 ID, 수정일 등을 통해 일정을 조회할 수 있다.
@@ -324,7 +327,7 @@
 
 
 - 중복된 이메일은 사용할 수 없다.
-  //캡처
+  ![dataIntegrityException](doc/img/dataIntegrityException.png)
 
 
 - 작성자 ID를 기반으로 작성자를 조회할 수 있다.
