@@ -8,6 +8,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
+// 코드 분리: 모든 JdbcTemplate 연결설정 주입
 @Configuration
 public class JDBCConfig {
     @Value("${spring.datasource.url}")

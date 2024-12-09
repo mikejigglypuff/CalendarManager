@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+// Service 계층에 DTO를 전달하는 역할
+// HTML page를 사용하지 않는 프로젝트이므로 RestController 사용
 @RestController
 @RequestMapping(value = "/schedule", consumes = "application/json")
 public class ScheduleController {
@@ -27,10 +29,10 @@ public class ScheduleController {
     @PostMapping
     public SchedulePostResponseDTO postSchedule(@Valid @RequestBody SchedulePostRequestDTO requestDTO) {
         int affectedRowNumber = service.addSchedule(new Schedule(requestDTO));
-        // 로깅 추가할 것
         return new SchedulePostResponseDTO(affectedRowNumber);
     }
 
+    // 스케줄 ID로 스케줄 단건 조회
     @GetMapping("/{scheduleID}")
     public ScheduleGetResponseDTO getSchedule(@PathVariable Long scheduleID) {
         return service.getSchedule(new ScheduleGetOneRequestDTO(scheduleID));
@@ -52,14 +54,12 @@ public class ScheduleController {
     @PatchMapping
     public SchedulePatchResponseDTO patchSchedule(@Valid @RequestBody SchedulePatchRequestDTO requestDTO) {
         int patchResult = service.updateSchedule(requestDTO);
-        // 로깅 추가할 것
         return new SchedulePatchResponseDTO(patchResult);
     }
 
     @PutMapping
     public SchedulePutResponseDTO putSchedule(@Valid @RequestBody SchedulePutRequestDTO requestDTO) {
         int deleteResult = service.deleteSchedule(requestDTO);
-        // 로깅 추가할 것
         return new SchedulePutResponseDTO(deleteResult);
     }
 

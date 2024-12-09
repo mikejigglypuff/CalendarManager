@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+// Service 계층에 DTO를 전달하는 역할
+// HTML page를 사용하지 않는 프로젝트이므로 RestController 사용
 @RestController
 @RequestMapping(value = "/writer", consumes = "application/json")
 public class WriterController {
@@ -24,6 +26,7 @@ public class WriterController {
         return service.addWriter(requestDTO);
     }
 
+    // 작성자 ID로 작성자 단건 조회
     @GetMapping(value = "/{writerID}")
     public WriterGetResponseDTO getWriter(@PathVariable Long writerID) {
         return service.getWriter(new WriterGetOneRequestDTO(writerID));

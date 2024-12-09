@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+// Controller에게 DTO 클래스를 받아 Repository가 쿼리하기 좋은 형태로 변환하는 역할 담당
 @Service
 public class ScheduleService {
     private final ScheduleRepository repository;
@@ -30,7 +31,7 @@ public class ScheduleService {
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
-        return repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()));
+        return repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()), dto.getMap());
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetRequestDTO dto) {

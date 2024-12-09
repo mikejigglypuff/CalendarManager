@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,11 +30,10 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public int save(Schedule schedule) {
-        String sql = "insert into schedule (works, writerID, password, createdAt, updatedAt)"
-            + " values (:works, :writerID, :password, :createdAt, :updatedAt)";
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(schedule);
 
-        return namedParameterTemplate.update(sql, paramSource);
+        return namedParameterTemplate.update("insert into schedule (works, writerID, password, createdAt, updatedAt)"
+            + " values (:works, :writerID, :password, :createdAt, :updatedAt)", paramSource);
     }
 
     @Override
@@ -46,18 +44,13 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public List<ScheduleGetResponseDTO> findAll() {
-        String sql = "select * from schedule";
-        return template.query(sql, dtoRowMapper);
+        return template.query("select * from schedule", dtoRowMapper);
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findAll(Pageable pageable) {
-        String sql = "select * from schedule limit :limit offset :offset";
-        Map<String, Object> params = new HashMap<>();
-        params.put("limit", pageable.getPageSize());
-        params.put("offset", pageable.getOffset());
-
-        return namedParameterTemplate.query(sql, params, dtoRowMapper);
+    public List<ScheduleGetResponseDTO> findAll(Pageable pageable, Map<String, Object> param) {
+        return namedParameterTemplate.query(
+            "select * from schedule limit :limit offset :offset", param, dtoRowMapper);
     }
 
     @Override

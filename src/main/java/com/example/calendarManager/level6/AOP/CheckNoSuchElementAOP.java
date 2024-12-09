@@ -13,6 +13,7 @@ import java.util.List;
 
 @Aspect
 @Component
+// 코드 분리: 퀴리 결과가 빈 값인지를 검증하는 로직
 public class CheckNoSuchElementAOP {
     @AfterReturning(
         pointcut = "execution(* com.example.calendarManager.*.repository.JDBCTemplateScheduleRepository.find*(..))" +

@@ -36,6 +36,7 @@ public class SchedulePatchRequestDTO extends RequestDTO {
         return writerID;
     }
 
+    // null 값 허용되는 필드 검증
     private boolean hasWorks() {
         return this.works != null;
     }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 
+// DB 접근기술의 변경을 대비하기 위한 추상화
 public interface ScheduleRepository {
     public int save(Schedule schedule);
 
@@ -14,7 +15,7 @@ public interface ScheduleRepository {
 
     public List<ScheduleGetResponseDTO> findAll();
 
-    public List<ScheduleGetResponseDTO> findAll(Pageable pageable);
+    public List<ScheduleGetResponseDTO> findAll(Pageable pageable, Map<String, Object> param);
 
     public List<ScheduleGetResponseDTO> findByWriterID(Map<String, Object> param);
 

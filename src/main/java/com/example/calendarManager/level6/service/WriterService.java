@@ -9,6 +9,7 @@ import com.example.calendarManager.level6.repository.WriterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+// Controller에게 DTO 클래스를 받아 Repository가 쿼리하기 좋은 형태로 변환하는 역할 담당
 @Service
 public class WriterService {
     private final WriterRepository repository;

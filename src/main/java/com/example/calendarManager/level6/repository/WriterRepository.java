@@ -5,6 +5,7 @@ import com.example.calendarManager.level6.domain.Writer;
 
 import java.util.Map;
 
+// DB 접근기술의 변경을 대비하기 위한 추상화
 public interface WriterRepository {
     public String save(Writer writer);
 

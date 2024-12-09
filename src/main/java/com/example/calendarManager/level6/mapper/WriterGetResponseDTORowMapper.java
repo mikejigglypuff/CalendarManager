@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// 쿼리 결과가 필요한 데이터만 갖도록 매핑하는 클래스
 @Component
 public class WriterGetResponseDTORowMapper implements RowMapper<WriterGetResponseDTO> {
     @Override
