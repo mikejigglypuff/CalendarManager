@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class SchedulePatchRequestDTO {
+public class SchedulePatchRequestDTO extends RequestDTO {
     @NotNull(message = "password 값이 포함되어야 합니다.")
     @Size(max = 20, message = "password는 20자 이하여야 합니다.")
     private final String password;
@@ -19,6 +19,9 @@ public class SchedulePatchRequestDTO {
         this.password = password;
         this.works = works;
         this.writerID = writerID;
+        map.put("password", password);
+        if(this.hasWorks()) map.put("works", works);
+        if(this.hasWriterID()) map.put("writerID", writerID);
     }
 
     public String getWorks() {
@@ -33,6 +36,6 @@ public class SchedulePatchRequestDTO {
         return writerID;
     }
 
-    public boolean hasWorks() { return this.works != null; }
-    public boolean hasWriterID(){ return this.writerID != null; }
+    private boolean hasWorks() { return this.works != null; }
+    private boolean hasWriterID(){ return this.writerID != null; }
 }

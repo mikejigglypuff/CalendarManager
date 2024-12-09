@@ -33,9 +33,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/{scheduleID}")
-    public ScheduleGetResponseDTO getSchedule(
-        @Positive(message = "scheduleID는 양의 정수여야 합니다.") @PathVariable Long scheduleID) {
-        return service.getSchedule(scheduleID);
+    public ScheduleGetResponseDTO getSchedule(@PathVariable Long scheduleID) {
+        return service.getSchedule(new ScheduleGetOneRequestDTO(scheduleID));
     }
 
     @GetMapping("/page")

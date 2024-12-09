@@ -1,9 +1,6 @@
 package com.example.calendarManager.level6.service;
 
-import com.example.calendarManager.level6.DTO.requestDTO.ScheduleGetPageRequestDTO;
-import com.example.calendarManager.level6.DTO.requestDTO.ScheduleGetRequestDTO;
-import com.example.calendarManager.level6.DTO.requestDTO.SchedulePatchRequestDTO;
-import com.example.calendarManager.level6.DTO.requestDTO.SchedulePutRequestDTO;
+import com.example.calendarManager.level6.DTO.requestDTO.*;
 import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
 import com.example.calendarManager.level6.domain.Schedule;
 import com.example.calendarManager.level6.repository.ScheduleRepository;
@@ -11,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScheduleService{
@@ -26,8 +25,8 @@ public class ScheduleService{
         return repository.save(schedule);
     }
 
-    public ScheduleGetResponseDTO getSchedule(Long scheduleID) {
-        return repository.findOne(scheduleID);
+    public ScheduleGetResponseDTO getSchedule(ScheduleGetOneRequestDTO dto) {
+        return repository.findOne(dto.getMap());
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
@@ -35,34 +34,37 @@ public class ScheduleService{
     }
 
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetRequestDTO dto) {
-        boolean hasWriterID = dto.hasWriterID(), isUpdatedAt = dto.isUpdatedAt();
+        Map<String, Object> param = dto.getMap();
+        boolean hasWriterID = param.containsKey("writerID"), isUpdatedAt = param.containsKey("updatedAt");
 
         if(!hasWriterID && !isUpdatedAt) {
             return repository.findAll();
         } else if(!hasWriterID) {
-            return repository.findByUpdatedAt(dto.getUpdatedAt());
+            return repository.findByUpdatedAt(param);
         } else if(!isUpdatedAt) {
-            return repository.findByWriterID(dto.getWriterID());
+            return repository.findByWriterID(param);
         }
 
-        return repository.findByWriterIDAndUpdatedAt(dto.getWriterID(), dto.getUpdatedAt());
+        return repository.findByWriterIDAndUpdatedAt(param);
     }
 
     public int updateSchedule(SchedulePatchRequestDTO dto) {
-        boolean hasWorks = dto.hasWorks(), hasWriterID = dto.hasWriterID();
+        Map<String, Object> param = dto.getMap();
+        param.put("updatedAt", LocalDateTime.now());
+        boolean hasWorks = param.containsKey("works"), hasWriterID = param.containsKey("writerID");
 
         if(hasWorks && hasWriterID) {
-            return repository.updateWorksAndWriterID(dto.getPassword(), dto.getWorks(), dto.getWriterID());
+            return repository.updateWorksAndWriterID(param);
         } else if(hasWorks) {
-            return repository.updateWorks(dto.getPassword(), dto.getWorks());
+            return repository.updateWorks(param);
         } else if(hasWriterID) {
-            return repository.updateWriterID(dto.getPassword(), dto.getWriterID());
+            return repository.updateWriterID(param);
         }
 
         return 0;
     }
 
-    public int deleteSchedule(SchedulePutRequestDTO DTO) {
-        return repository.delete(DTO.getScheduleID(), DTO.getPassword());
+    public int deleteSchedule(SchedulePutRequestDTO dto) {
+        return repository.delete(dto.getMap());
     }
 }

@@ -41,12 +41,9 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public ScheduleGetResponseDTO findOne(Long scheduleID) {
-        String sql = "select * from schedule where scheduleID = :scheduleID";
-        Map<String, Object> params = new HashMap<>();
-        params.put("scheduleID", scheduleID);
-
-        return namedParameterTemplate.queryForObject(sql, params, dtoRowMapper);
+    public ScheduleGetResponseDTO findOne(Map<String, Object> param) {
+        return namedParameterTemplate.queryForObject(
+            "select * from schedule where scheduleID = :scheduleID", param, dtoRowMapper);
     }
 
     @Override
@@ -66,78 +63,47 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findByWriterID(Long writerID) {
-        String sql = "select * from schedule where writerID = :writerID";
-        Map<String, Object> params = new HashMap<>();
-        params.put("writerID", writerID);
-
-        return namedParameterTemplate.query(sql, params, dtoRowMapper);
+    public List<ScheduleGetResponseDTO> findByWriterID(Map<String, Object> param) {
+        return namedParameterTemplate.query(
+            "select * from schedule where writerID = :writerID", param, dtoRowMapper);
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findByUpdatedAt(LocalDate updatedAt) {
-        String sql = "select * from schedule where updatedAt > :updatedAt";
-        Map<String, Object> params = new HashMap<>();
-        params.put("updatedAt", updatedAt);
-
-        return namedParameterTemplate.query(sql, params, dtoRowMapper);
+    public List<ScheduleGetResponseDTO> findByUpdatedAt(Map<String, Object> param) {
+        return namedParameterTemplate.query(
+            "select * from schedule where updatedAt > :updatedAt", param, dtoRowMapper);
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findByWriterIDAndUpdatedAt(Long writerID, LocalDate updatedAt) {
-        String sql = "select * from schedule where writerID = :writerID and updatedAt > :updatedAt";
-        Map<String, Object> params = new HashMap<>();
-        params.put("writerID", writerID);
-        params.put("updatedAt", updatedAt);
-
-        return namedParameterTemplate.query(sql, params, dtoRowMapper);
+    public List<ScheduleGetResponseDTO> findByWriterIDAndUpdatedAt(Map<String, Object> param) {
+        return namedParameterTemplate.query(
+            "select * from schedule where writerID = :writerID and updatedAt > :updatedAt", param, dtoRowMapper);
     }
 
     @Override
-    public int updateWorks(String password, String works) {
-        String sql = "update schedule set works = :works, updatedAt = :updatedAt" +
-            " where password = :password";
-        Map<String, Object> params = new HashMap<>();
-        params.put("works", works);
-        params.put("updatedAt", LocalDateTime.now());
-        params.put("password", password);
-
-        return namedParameterTemplate.update(sql, params);
+    public int updateWorks(Map<String, Object> param) {
+        return namedParameterTemplate.update(
+            "update schedule set works = :works, updatedAt = :updatedAt" +
+            " where password = :password", param);
     }
 
     @Override
-    public int updateWriterID(String password, Long writerID) {
-        String sql = "update schedule set writerID=:writerID, updatedAt = :updatedAt" +
-            " where password = :password";
-        Map<String, Object> params = new HashMap<>();
-        params.put("writerID", writerID);
-        params.put("updatedAt", LocalDateTime.now());
-        params.put("password", password);
-
-        return namedParameterTemplate.update(sql, params);
+    public int updateWriterID(Map<String, Object> param) {
+        return namedParameterTemplate.update(
+            "update schedule set writerID=:writerID, updatedAt = :updatedAt" +
+            " where password = :password", param);
     }
 
     @Override
-    public int updateWorksAndWriterID(String password, String works, Long writerID) {
-        String sql = "update schedule set works=:works, writerID=:writerID, updatedAt = :updatedAt"
-            + " where password = :password";
-        Map<String, Object> params = new HashMap<>();
-        params.put("works", works);
-        params.put("writerID", writerID);
-        params.put("updatedAt", LocalDateTime.now());
-        params.put("password", password);
-
-        return namedParameterTemplate.update(sql, params);
+    public int updateWorksAndWriterID(Map<String, Object> param) {
+        return namedParameterTemplate.update(
+            "update schedule set works=:works, writerID=:writerID, updatedAt = :updatedAt"
+            + " where password = :password", param);
     }
 
     @Override
-    public int delete(Long scheduleID, String password) {
-        String sql = "delete from schedule " +
-            "where scheduleID = :scheduleID and password = :password";
-        Map<String, Object> params = new HashMap<>();
-        params.put("scheduleID", scheduleID);
-        params.put("password", password);
-
-        return namedParameterTemplate.update(sql, params);
+    public int delete(Map<String, Object> param) {
+        return namedParameterTemplate.update("delete from schedule " +
+            "where scheduleID = :scheduleID and password = :password", param);
     }
 }

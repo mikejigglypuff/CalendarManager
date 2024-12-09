@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class SchedulePostRequestDTO {
+public class SchedulePostRequestDTO extends RequestDTO {
     @NotNull(message = "works가 포함되어야 합니다.")
     @Size(max = 200, message = "works는 200자 이하여야 합니다.")
     private final String works;
@@ -21,6 +21,9 @@ public class SchedulePostRequestDTO {
         this.works = works;
         this.writerID = writerID;
         this.password = password;
+        map.put("works", works);
+        map.put("writerID", writerID);
+        map.put("password", password);
     }
 
     public String getWorks() {

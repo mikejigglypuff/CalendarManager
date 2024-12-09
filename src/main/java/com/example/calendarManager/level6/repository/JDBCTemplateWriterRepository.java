@@ -34,11 +34,7 @@ public class JDBCTemplateWriterRepository implements WriterRepository {
     }
 
     @Override
-    public WriterGetResponseDTO findOne(Long writerID) {
-        String sql = "select * from writer where writerID = :writerID";
-        Map<String, Object> param = new HashMap<>();
-        param.put("writerID", writerID);
-
-        return namedTemplate.queryForObject(sql, param, rowMapper);
+    public WriterGetResponseDTO findOne(Map<String, Object> param) {
+        return namedTemplate.queryForObject("select * from writer where writerID = :writerID", param, rowMapper);
     }
 }

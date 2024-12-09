@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
-public class WriterPostRequestDTO {
+public class WriterPostRequestDTO extends RequestDTO {
     @NotNull(message = "writerName이 포함되어야 합니다.")
     private final String writerName;
 
@@ -21,6 +21,8 @@ public class WriterPostRequestDTO {
     public WriterPostRequestDTO(String writerName, String email) {
         this.writerName = writerName;
         this.email = email;
+        map.put("writerName", writerName);
+        map.put("email", email);
     }
 
     public String getWriterName() {

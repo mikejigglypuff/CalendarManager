@@ -1,5 +1,6 @@
 package com.example.calendarManager.level6.service;
 
+import com.example.calendarManager.level6.DTO.requestDTO.WriterGetOneRequestDTO;
 import com.example.calendarManager.level6.DTO.requestDTO.WriterPostRequestDTO;
 import com.example.calendarManager.level6.DTO.responseDTO.WriterGetResponseDTO;
 import com.example.calendarManager.level6.DTO.responseDTO.WriterPostResponseDTO;
@@ -21,7 +22,7 @@ public class WriterService{
         return new WriterPostResponseDTO(repository.save(new Writer(dto)));
     }
 
-    public WriterGetResponseDTO getWriter(Long writerID) {
-        return repository.findOne(writerID);
+    public WriterGetResponseDTO getWriter(WriterGetOneRequestDTO dto) {
+        return repository.findOne(dto.getMap());
     }
 }
