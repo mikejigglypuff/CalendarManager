@@ -1,6 +1,7 @@
 package com.example.calendarManager.level6.AOP;
 
 import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.WriterGetResponseDTO;
 import com.example.calendarManager.level6.exception.NoMatchScheduleException;
 import com.example.calendarManager.level6.exception.NoMatchWriterException;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -22,6 +23,15 @@ public class CheckNoSuchElementAOP {
     )
     public void checkEmptyScheduleResult(List<ScheduleGetResponseDTO> result) throws NoMatchScheduleException {
         if (result.isEmpty()) throw new NoMatchScheduleException();
+    }
+
+    @AfterReturning(
+        pointcut = "execution(* com.example.calendarManager.*.repository.JDBCTemplateWriterRepository.find*(..))" +
+            " && !execution(* com.example.calendarManager.*.repository.JDBCTemplateWriterRepository.findOne(..))",
+        returning = "result"
+    )
+    public void checkEmptyWriterResult(List<WriterGetResponseDTO> result) throws NoMatchWriterException {
+        if (result.isEmpty()) throw new NoMatchWriterException();
     }
 
     @AfterReturning(

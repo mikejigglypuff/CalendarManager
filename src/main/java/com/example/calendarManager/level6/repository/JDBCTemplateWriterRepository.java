@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -35,5 +36,10 @@ public class JDBCTemplateWriterRepository implements WriterRepository {
     @Override
     public WriterGetResponseDTO findOne(Map<String, Object> param) {
         return namedTemplate.queryForObject("select * from writer where writerID = :writerID", param, rowMapper);
+    }
+
+    @Override
+    public List<WriterGetResponseDTO> findByName(Map<String, Object> param) {
+        return namedTemplate.query("select * from writer where writerName = :writerName", param, rowMapper);
     }
 }
