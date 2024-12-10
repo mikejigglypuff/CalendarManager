@@ -349,6 +349,8 @@
 
 
 ### 구현 사항들
+<details>
+<summary>구현 사항들</summary>
 1. 일정 CRUD
 
 
@@ -434,4 +436,7 @@
 
 
 - postman을 이용해 API의 각 기능들이 잘 동작하는지 확인할 수 있도록 입력 상황별 테스트들을 구현하였다.
-  ![api tests](doc/img/apitests.png)
+
+  [postman 테스트 모음](https://universal-trinity-941577.postman.co/workspace/SWCapstone~9ffb3725-a6f0-4cdf-969f-75f3b78023e1/collection/29701980-8f31a90a-f012-4519-9ef4-d1ce8b031b5e?action=share&creator=29701980)
+</details>
+
