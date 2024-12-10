@@ -1,6 +1,7 @@
 package com.example.calendarManager.level6.service;
 
 import com.example.calendarManager.level6.DTO.requestDTO.*;
+import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetPageResponseDTO;
 import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
 import com.example.calendarManager.level6.domain.Schedule;
 import com.example.calendarManager.level6.repository.ScheduleRepository;
@@ -30,7 +31,7 @@ public class ScheduleService {
         return repository.findOne(dto.getMap());
     }
 
-    public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
+    public List<ScheduleGetPageResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
         return repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()), dto.getMap());
     }
 

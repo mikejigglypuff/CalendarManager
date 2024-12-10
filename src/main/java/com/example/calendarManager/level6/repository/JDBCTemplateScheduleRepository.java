@@ -1,7 +1,9 @@
 package com.example.calendarManager.level6.repository;
 
+import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetPageResponseDTO;
 import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
 import com.example.calendarManager.level6.domain.Schedule;
+import com.example.calendarManager.level6.mapper.ScheduleGetPageResponseDTOMapper;
 import com.example.calendarManager.level6.mapper.ScheduleGetResponseDTORowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +22,18 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     private final JdbcTemplate template;
     private final NamedParameterJdbcTemplate namedParameterTemplate;
     private final ScheduleGetResponseDTORowMapper dtoRowMapper;
+    private final ScheduleGetPageResponseDTOMapper pageDtoRowMapper;
 
     @Autowired
-    public JDBCTemplateScheduleRepository(DataSource dataSource) {
+    public JDBCTemplateScheduleRepository(
+        DataSource dataSource,
+        ScheduleGetResponseDTORowMapper dtoRowMapper,
+        ScheduleGetPageResponseDTOMapper pageDtoRowMapper
+    ) {
         this.template = new JdbcTemplate(dataSource);
         this.namedParameterTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.dtoRowMapper = new ScheduleGetResponseDTORowMapper();
+        this.dtoRowMapper = dtoRowMapper;
+        this.pageDtoRowMapper = pageDtoRowMapper;
     }
 
     @Override
@@ -48,9 +56,10 @@ public class JDBCTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleGetResponseDTO> findAll(Pageable pageable, Map<String, Object> param) {
+    public List<ScheduleGetPageResponseDTO> findAll(Pageable pageable, Map<String, Object> param) {
         return namedParameterTemplate.query(
-            "select * from schedule limit :size offset :offset", param, dtoRowMapper);
+            "select * from schedule s inner join writer w on s.writerID = w.writerID limit :size offset :offset",
+            param, pageDtoRowMapper);
     }
 
     @Override

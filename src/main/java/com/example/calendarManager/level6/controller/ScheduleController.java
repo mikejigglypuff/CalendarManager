@@ -1,10 +1,7 @@
 package com.example.calendarManager.level6.controller;
 
 import com.example.calendarManager.level6.DTO.requestDTO.*;
-import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
-import com.example.calendarManager.level6.DTO.responseDTO.SchedulePatchResponseDTO;
-import com.example.calendarManager.level6.DTO.responseDTO.SchedulePostResponseDTO;
-import com.example.calendarManager.level6.DTO.responseDTO.SchedulePutResponseDTO;
+import com.example.calendarManager.level6.DTO.responseDTO.*;
 import com.example.calendarManager.level6.domain.Schedule;
 import com.example.calendarManager.level6.service.ScheduleService;
 import jakarta.validation.Valid;
@@ -39,7 +36,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/page")
-    public List<ScheduleGetResponseDTO> getSchedulePage(@Valid ScheduleGetPageRequestDTO requestDTO) {
+    public List<ScheduleGetPageResponseDTO> getSchedulePage(@Valid ScheduleGetPageRequestDTO requestDTO) {
         return service.getScheduleList(requestDTO);
     }
 

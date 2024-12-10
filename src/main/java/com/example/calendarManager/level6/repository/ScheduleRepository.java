@@ -1,5 +1,6 @@
 package com.example.calendarManager.level6.repository;
 
+import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetPageResponseDTO;
 import com.example.calendarManager.level6.DTO.responseDTO.ScheduleGetResponseDTO;
 import com.example.calendarManager.level6.domain.Schedule;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ public interface ScheduleRepository {
 
     public List<ScheduleGetResponseDTO> findAll();
 
-    public List<ScheduleGetResponseDTO> findAll(Pageable pageable, Map<String, Object> param);
+    public List<ScheduleGetPageResponseDTO> findAll(Pageable pageable, Map<String, Object> param);
 
     public List<ScheduleGetResponseDTO> findByWriterID(Map<String, Object> param);
 
