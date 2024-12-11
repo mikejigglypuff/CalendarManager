@@ -8,6 +8,7 @@ import com.example.calendarManager.level6.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,18 +24,22 @@ public class ScheduleService {
         this.repository = repository;
     }
 
+    @Transactional
     public int addSchedule(Schedule schedule) {
         return repository.save(schedule);
     }
 
+    @Transactional
     public ScheduleGetResponseDTO getSchedule(ScheduleGetOneRequestDTO dto) {
         return repository.findOne(dto.getMap());
     }
 
+    @Transactional
     public List<ScheduleGetPageResponseDTO> getScheduleList(ScheduleGetPageRequestDTO dto) {
         return repository.findAll(PageRequest.of(dto.getOffset(), dto.getSize()), dto.getMap());
     }
 
+    @Transactional
     public List<ScheduleGetResponseDTO> getScheduleList(ScheduleGetRequestDTO dto) {
         Map<String, Object> param = dto.getMap();
         boolean hasWriterID = param.containsKey("writerID"), isUpdatedAt = param.containsKey("updatedAt");
@@ -50,6 +55,7 @@ public class ScheduleService {
         return repository.findByWriterIDAndUpdatedAt(param);
     }
 
+    @Transactional
     public int updateSchedule(SchedulePatchRequestDTO dto) {
         Map<String, Object> param = dto.getMap();
         param.put("updatedAt", LocalDateTime.now());
@@ -66,6 +72,7 @@ public class ScheduleService {
         return 0;
     }
 
+    @Transactional
     public int deleteSchedule(SchedulePutRequestDTO dto) {
         return repository.delete(dto.getMap());
     }

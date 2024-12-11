@@ -20,13 +20,13 @@ import java.util.NoSuchElementException;
 public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No element found: " + e.getMessage());
+        return makeStringResBody(HttpStatus.NOT_FOUND, "No element found: " + e.getMessage());
     }
 
     // 요청에 필수 값들이 포함되지 않았을 때 발생하는 예외 처리
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("bad request: " + e.getMessage());
+        return makeStringResBody(HttpStatus.BAD_REQUEST, "잘못된 요청: " + e.getMessage());
     }
 
     // validator 검증 실패해 생긴 MethodArgumentNotValidException 처리
@@ -41,14 +41,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolationExceptionException(DataIntegrityViolationException e) {
+        return makeStringResBody(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
     @ExceptionHandler(QueryException.class)
     public ResponseEntity<String> handleQueryException(QueryException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        return makeStringResBody(HttpStatus.INTERNAL_SERVER_ERROR, "데이터 일관성 문제: " + e.getMessage());
     }
 
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<String> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 (외래)키 또는 컬럼을 입력하였습니다.");
+    private ResponseEntity<String> makeStringResBody(HttpStatus status, String body) {
+        return ResponseEntity.status(status).body(body);
     }
-
 }
